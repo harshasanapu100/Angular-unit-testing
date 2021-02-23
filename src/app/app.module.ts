@@ -13,6 +13,7 @@ import { VoterComponent } from './1-voter/voter.component';
 import { routes } from './app.routes';
 import { UsersComponent } from './users/users.component';
 import { HighlightDirective } from './highlight.directive'; 
+import { TodoService } from './2-todos/todo.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { HighlightDirective } from './highlight.directive';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
