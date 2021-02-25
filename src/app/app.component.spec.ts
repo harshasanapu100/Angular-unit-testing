@@ -1,25 +1,44 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing'; 
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppComponent ]
+      imports: [RouterTestingModule.withRoutes([])],
+      declarations: [AppComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); 
+    fixture.detectChanges();
   });
+
+  it('component should have a router outlet', () => {
+    // Arrange
+    const de = fixture.debugElement.query(By.directive(RouterOutlet));
+
+    // Assert
+    expect(de).not.toBeNull();
+  });
+
+  it('should have a link to todos page', () => {
+    // Arrange
+    const debugElements = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+    const index = debugElements.findIndex(de=>de.properties['href'] === '/todos');
+
+    // Assert
+    expect(index).toBeGreaterThan(-1);
+  });
+
 });
